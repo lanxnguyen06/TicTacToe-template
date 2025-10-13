@@ -22,7 +22,7 @@ public class GameBoard {
     }
 
     // makeMove marks a non-empty cell with the respective symbol
-    public boolean makeMove(int row, int col, char symbol) {
+    public boolean makeMove(int row, int col, char symbol){
             if (row < 0 || row >= SIZE || col < 0 || col >= SIZE){
                 System.out.println("Invalid position");
                 return false;
@@ -32,9 +32,11 @@ public class GameBoard {
                 board[row][col] = symbol; // replaces empty space with symbol
                 return true; // exit loop
             }//ends if statement
-            else
+
+            else{
                 System.out.println("There is already a symbol here.");
                 return false; // continue loop
+            }
         }
     // Checks if a player has placed three symbols in a row, column, or diagonal
     // If yes, that player has won
@@ -64,7 +66,7 @@ public class GameBoard {
             return false;
     }
     
-    public boolean checkWin() {
+    public boolean checkWin(){
         if (checkRows() == true || checkColumns() == true || checkDiagonals() == true)
             return true;
         else
@@ -74,8 +76,8 @@ public class GameBoard {
     // Checks if the gameboard is full but no player won
     public boolean isFull() {
         int count = 0;
-        for (int r = 0; r < board.length; r++){
-            for (int c = 0; c < board[0].length; c++){
+        for (int r = 0; r < SIZE; r++){
+            for (int c = 0; c < SIZE; c++){
                 if (board[r][c] == 'x' || board[r][c] == 'o'){
                     count++;
                 }//ends if
@@ -83,12 +85,20 @@ public class GameBoard {
         }//ends row counter
         if (count == 9 && checkWin() == false){ // if count = 9 that means all the spaces are full
             System.out.println("The board is full and nobody won.");
+            return false;
         }//ends if
         return true;
     }
 
     public void printBoard() {
-        // TODO: implement
-        System.out.println("Should print out the game board's current status.");
+        System.out.println("--------------");
+        for (int r = 0; r < SIZE; r ++){
+            System.out.print("| ");
+            for (int c = 0; c < SIZE; c++){
+                System.out.print(board[r][c] + " | ");
+            }
+            System.out.println();
+            System.out.println("--------------");
+        }
     }
 }

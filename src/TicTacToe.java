@@ -10,16 +10,20 @@ public class TicTacToe {
     private GameBoard gameBoard;
     private Player player1;
     private Player player2;
+    private String player1Name;
+    private String player2Name;
     private Player currentPlayer;
     private Scanner scanner;
 
     public TicTacToe() {
         Scanner scanner = new Scanner(System.in);
         gameBoard = new GameBoard();
-        System.out.println("Enter player 1's name");
-        String player1 = scanner.nextLine();
-        System.out.println("Enter player 2's name");
-        String player2 = scanner.nextLine();
+        System.out.println("Enter player 1's name. This player will use 'X'.");
+        player1Name = scanner.nextLine();
+        System.out.println("Enter player 2's name. This player will use 'O'.");
+        player2Name = scanner.nextLine();
+        Player player1 = new Player(player1Name, 'x');
+        Player player2 = new Player(player2Name, 'o'); 
         startGame();
         // TODO: read player names
         // player1 starts the game
@@ -32,7 +36,7 @@ public class TicTacToe {
             promptPlayerMove();
             if (gameBoard.checkWin()) {
                 gameBoard.printBoard();
-                System.out.println(/* TODO */ + " wins!");
+                System.out.println(player1 + " wins!");
                 gameEnded = true;
             } else if (gameBoard.isFull()) {
                 gameBoard.printBoard();
