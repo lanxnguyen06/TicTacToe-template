@@ -12,8 +12,8 @@ public class GameBoard {
     // The size indicates the gameboard size (3x3)
     public static final int SIZE = 3;
 
-    public GameBoard(char[][] board) {
-        this.board = board;
+    public GameBoard() {
+        board = new char[SIZE][SIZE];
         for (int r = 0; r < board.length; r++){
             for (int c = 0; c < board[0].length; c++){
                 board[r][c] = '-';
@@ -23,18 +23,46 @@ public class GameBoard {
 
     // makeMove marks a non-empty cell with the respective symbol
     public boolean makeMove(int row, int col, char symbol) {
-        while(true){
+            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE){
+                System.out.println("Invalid position");
+                return false;
+            }
+
             if (board[row][col] == '-'){ // checks if row + column has an empty space
                 board[row][col] = symbol; // replaces empty space with symbol
-                return false; // exit loop
+                return true; // exit loop
             }//ends if statement
             else
                 System.out.println("There is already a symbol here.");
-                return true; // continue loop
+                return false; // continue loop
         }
-    }//ends while loop
     // Checks if a player has placed three symbols in a row, column, or diagonal
     // If yes, that player has won
+
+    public boolean checkRows(){ // pattern of rows incrementing by 1
+        for (int r = 0; r < SIZE; r++){
+            if (board[r][0] != '-' && board[r][0] == board[r][1] && board[r][1] == board[r][2]){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean checkColumns(){ // pattern of columns incrementing by 1
+        for (int c = 0; c < SIZE; c++){
+            if (board[0][c] != '-' && board[0][c] == board[1][c] && board[1][c] == board[2][c]){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean checkDiagonals(){
+        if (board[1][1] != '-' && board[0][0] == board[1][1] && board[1][1] == board[2][2])
+            return true;
+        else if (board[1][1] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) // just check one of the elements if empty space because && will check if they all have same char anyway
+            return true;
+        else
+            return false;
+    }
     
     public boolean checkWin() {
         // Hint: Define additional methods to keep your code organized and readable!

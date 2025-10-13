@@ -15,7 +15,7 @@ public class TicTacToe {
 
     public TicTacToe() {
         Scanner scanner = new Scanner(System.in);
-        gameBoard = new GameBoard(new char[3][3]);
+        gameBoard = new GameBoard();
         System.out.println("Enter player 1's name");
         String player1 = scanner.nextLine();
         System.out.println("Enter player 2's name");
