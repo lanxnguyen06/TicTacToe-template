@@ -14,7 +14,13 @@ public class TicTacToe {
     private Scanner scanner;
 
     public TicTacToe() {
-        gameBoard = new GameBoard();
+        Scanner scanner = new Scanner(System.in);
+        gameBoard = new GameBoard(new char[3][3]);
+        System.out.println("Enter player 1's name");
+        String player1 = scanner.nextLine();
+        System.out.println("Enter player 2's name");
+        String player2 = scanner.nextLine();
+        startGame();
         // TODO: read player names
         // player1 starts the game
     }
@@ -42,13 +48,15 @@ public class TicTacToe {
     // Prompts the player to place a move and checks for its validity
     private void promptPlayerMove() {
         boolean validMove = false;
+        System.out.println("Place a move");
         // TODO: ask the player to place a move
         // Check whether the move is valid, if not, ask the player to place a move again
         // If the player's move is valid, the move is placed on the gameBoard
-        
+        while(validMove){
         if (!validMove) {
             System.out.println("Invalid move, try again.");
         }
+    }//ends while loop
 
     }
 
