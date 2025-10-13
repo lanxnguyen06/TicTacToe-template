@@ -65,14 +65,10 @@ public class GameBoard {
     }
     
     public boolean checkWin() {
-        // Hint: Define additional methods to keep your code organized and readable!
-        // TODO: Check rows // rows at [0][0] [0][1] [0][2] and [1][0] [1][1] [1][2] and [2][0] [2][1] [2][2]
-        
-        // TODO: Check columns // columns at  [0][0] [1][0] [2][0] and [0][1] [1][1] [2][1] and [0][2] [1][2] [2][2]
-
-        // TODO: Check diagonals // diagonals at [0][0] [1][1] [2][2] and [0][2] [1][1] [2][0]
-        
-        return false;
+        if (checkRows() == true || checkColumns() == true || checkDiagonals() == true)
+            return true;
+        else
+            return false;
     }
 
     // Checks if the gameboard is full but no player won
