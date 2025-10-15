@@ -29,7 +29,7 @@ public class GameBoard {
             }
 
             if (board[row][col] == '-'){ // checks if row + column has an empty space
-                board[row][col] = symbol; // replaces empty space with symbol
+                System.out.println(board[row][col] = symbol); // replaces empty space with symbol
                 return true; // exit loop
             }//ends if statement
 
@@ -78,16 +78,16 @@ public class GameBoard {
         int count = 0;
         for (int r = 0; r < SIZE; r++){
             for (int c = 0; c < SIZE; c++){
-                if (board[r][c] == 'x' || board[r][c] == 'o'){
+                if (board[r][c] == 'X' || board[r][c] == 'O'){
                     count++;
                 }//ends if
             }//ends column counter
         }//ends row counter
         if (count == 9 && checkWin() == false){ // if count = 9 that means all the spaces are full
             System.out.println("The board is full and nobody won.");
-            return false;
+            return true;
         }//ends if
-        return true;
+        return false;
     }
 
     public void printBoard() {

@@ -4,6 +4,7 @@
  * Copyright (c) 2025 Nadine von Frankenberg
  */
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -22,8 +23,9 @@ public class TicTacToe {
         player1Name = scanner.nextLine();
         System.out.println("Enter player 2's name. This player will use 'O'.");
         player2Name = scanner.nextLine();
-        Player player1 = new Player(player1Name, 'x');
-        Player player2 = new Player(player2Name, 'o'); 
+        player1 = new Player(player1Name, 'X');
+        player2 = new Player(player2Name, 'O'); 
+        currentPlayer = player1;
         startGame();
         // TODO: read player names
         // player1 starts the game
@@ -32,41 +34,83 @@ public class TicTacToe {
     public void startGame() {
         boolean gameEnded = false;
         while (!gameEnded) {
-            gameBoard.printBoard();
-            promptPlayerMove();
             if (gameBoard.checkWin()) {
-                gameBoard.printBoard();
-                System.out.println(player1 + " wins!");
                 gameEnded = true;
+                gameBoard.printBoard();
+                System.out.println(currentPlayer.getName() + " wins!");
             } else if (gameBoard.isFull()) {
-                gameBoard.printBoard();
-                System.out.println("The game ended in a tie!");
                 gameEnded = true;
+                gameBoard.printBoard();
             } else {
+                gameBoard.printBoard();
+                promptPlayerMove();
                 switchPlayers();
             }
         }
-        scanner.close();
     }
 
     // Prompts the player to place a move and checks for its validity
     private void promptPlayerMove() {
-        boolean validMove = false;
-        System.out.println("Place a move");
-        // TODO: ask the player to place a move
-        // Check whether the move is valid, if not, ask the player to place a move again
-        // If the player's move is valid, the move is placed on the gameBoard
-        while(validMove){
-        if (!validMove) {
-            System.out.println("Invalid move, try again.");
+        Scanner scanner = new Scanner(System.in);
+        boolean select = false;
+        int row = 0;
+        int col = 0;
+        while(!select){
+            try{
+                System.out.println("It's " + currentPlayer.getName() + "s turn. Their symbol is " + currentPlayer.getSymbol());
+                System.out.println("Place a move");
+                System.out.println("Select a row (1-3)");
+                row = scanner.nextInt();
+                scanner.nextLine();
+            if (row >= 1 && row <= 3){
+                select = true;
+            }
+            else{
+                System.out.println("You must enter a row between the numbers 1-3.");
+            }
+        }
+            catch (InputMismatchException e){
+                System.out.println("This is not a valid number.");
+                scanner.nextLine();
+            }
+        }//ends while
+
+        select = false; // reset for columns
+
+        System.out.println("Select a column (1-3)");
+        while(!select){
+        try{
+            col = scanner.nextInt();
+            scanner.nextLine();
+            if (col >= 1 && col <= 3){
+                select = true;
+            }
+            else{
+            System.out.println("You must enter a column between the numbers 1-3.");
+            }
+        }
+        catch (InputMismatchException e){
+            System.out.println("This is not a valid number.");
+            select = false;
+            scanner.nextLine();
         }
     }//ends while loop
 
-    }
+    row = row - 1; // i ask user input from rows 1-3 because that's how humans count rows so i have to -1 to start from 0 index
+    col = col - 1;
 
-    // Switch players
-    // Sets the player that is not the currentPlayer as currentPlayer
+    boolean placeMove = gameBoard.makeMove(row, col, currentPlayer.getSymbol());
+    if (!placeMove){
+        System.out.println("That spot is full, try again");
+    }
+    else
+        select = true;
+    }//ends while loop
+
     private void switchPlayers() {
-        // TODO implement
+        if (currentPlayer == player1)
+            currentPlayer = player2;
+        else
+            currentPlayer = player1;
     }
 }
