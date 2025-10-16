@@ -26,23 +26,21 @@ public class TicTacToe {
         player1 = new Player(player1Name, 'X');
         player2 = new Player(player2Name, 'O'); 
         currentPlayer = player1;
-        startGame();
-        // TODO: read player names
-        // player1 starts the game
     }
 
     public void startGame() {
         boolean gameEnded = false;
         while (!gameEnded) {
-            if (gameBoard.checkWin()) {
+            if (gameBoard.checkWin()) { // if it's true player won the game 
                 gameEnded = true;
                 gameBoard.printBoard();
+                switchPlayers(); // switch back to previous player (aka the winner)
                 System.out.println(currentPlayer.getName() + " wins!");
-            } else if (gameBoard.isFull()) {
+            } else if (gameBoard.isFull()) { // if it's true that the board is full
                 gameEnded = true;
                 gameBoard.printBoard();
             } else {
-                gameBoard.printBoard();
+                gameBoard.printBoard(); // if no one has won yet or the board isn't full keep playing
                 promptPlayerMove();
                 switchPlayers();
             }
@@ -102,9 +100,13 @@ public class TicTacToe {
     boolean placeMove = gameBoard.makeMove(row, col, currentPlayer.getSymbol());
     if (!placeMove){
         System.out.println("That spot is full, try again");
+        promptPlayerMove();
     }
-    else
-        select = true;
+
+    boolean validMove = false;
+        // TODO: ask the player to place a move
+        // Check whether the move is valid, if not, ask the player to place a move again
+        // If the player's move is valid, the move is placed on the gameBoard
     }//ends while loop
 
     private void switchPlayers() {
