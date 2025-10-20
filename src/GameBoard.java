@@ -17,13 +17,13 @@ public class GameBoard {
         for (int r = 0; r < board.length; r++){
             for (int c = 0; c < board[0].length; c++){
                 board[r][c] = '-';
-            }//ends column counter
-        }//ends row counter
+            }
+        }
     }
 
     // makeMove marks a non-empty cell with the respective symbol
     public boolean makeMove(int row, int col, char symbol){
-            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE){
+            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE){ // checks to see if input is between 1-3
                 System.out.println("Invalid position");
                 return false;
             }
@@ -31,7 +31,7 @@ public class GameBoard {
             if (board[row][col] == '-'){ // checks if row + column has an empty space
                 System.out.println(board[row][col] = symbol); // replaces empty space with symbol
                 return true; // exit loop
-            }//ends if statement
+            }
 
             else{
                 System.out.println("There is already a symbol here.");
@@ -80,9 +80,9 @@ public class GameBoard {
             for (int c = 0; c < SIZE; c++){
                 if (board[r][c] == 'X' || board[r][c] == 'O'){
                     count++;
-                }//ends if
-            }//ends column counter
-        }//ends row counter
+                }
+            }
+        }
         if (count == 9 && checkWin() == false){ // if count = 9 that means all the spaces are full
             System.out.println("The board is full and nobody won.");
             return true;
@@ -91,14 +91,14 @@ public class GameBoard {
     }
 
     public void printBoard() {
-        System.out.println("--------------");
+        System.out.println("--------------"); // prints top of board
         for (int r = 0; r < SIZE; r ++){
-            System.out.print("| ");
+            System.out.print("| "); // prints | before the symbol
             for (int c = 0; c < SIZE; c++){
-                System.out.print(board[r][c] + " | ");
+                System.out.print(board[r][c] + " | "); // symbol gets printed and is followed by another border |
             }
             System.out.println();
-            System.out.println("--------------");
+            System.out.println("--------------"); // prints bottom of board
         }
     }
 }

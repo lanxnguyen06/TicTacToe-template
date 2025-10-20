@@ -17,7 +17,7 @@ public class TicTacToe {
     private Scanner scanner;
 
     public TicTacToe() {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         gameBoard = new GameBoard();
         System.out.println("Enter player 1's name. This player will use 'X'.");
         player1Name = scanner.nextLine();
@@ -36,9 +36,11 @@ public class TicTacToe {
                 gameBoard.printBoard();
                 switchPlayers(); // switch back to previous player (aka the winner)
                 System.out.println(currentPlayer.getName() + " wins!");
+                playAgain();
             } else if (gameBoard.isFull()) { // if it's true that the board is full
                 gameEnded = true;
                 gameBoard.printBoard();
+                playAgain();
             } else {
                 gameBoard.printBoard(); // if no one has won yet or the board isn't full keep playing
                 promptPlayerMove();
@@ -47,31 +49,57 @@ public class TicTacToe {
         }
     }
 
+    private void playAgain(){
+        scanner = new Scanner(System.in);
+        boolean checkAsk = false;
+        while (!checkAsk){
+            try{
+                System.out.println("Want to play again?");
+                String ask = scanner.nextLine();
+                if (ask.equalsIgnoreCase("yes")){
+                    checkAsk = true; // stop the loop
+                    gameBoard = new GameBoard(); // reset the gameboard
+                    currentPlayer = player1; // reset back to player 1
+                    startGame();
+                }
+                else if (ask.equalsIgnoreCase("no")){
+                    System.out.println("Thanks for playing!");
+                    checkAsk = true;
+                }
+                else
+                System.out.println("You must type 'yes' or 'no.'");
+            }
+            catch (InputMismatchException e){
+                System.out.println("You must type 'yes' or 'no.'");
+            }
+        }
+    }
+
     // Prompts the player to place a move and checks for its validity
     private void promptPlayerMove() {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         boolean select = false;
         int row = 0;
         int col = 0;
         while(!select){
             try{
-                System.out.println("It's " + currentPlayer.getName() + "s turn. Their symbol is " + currentPlayer.getSymbol());
+                System.out.println("It's " + currentPlayer.getName() + "'s turn. Their symbol is " + currentPlayer.getSymbol());
                 System.out.println("Place a move");
                 System.out.println("Select a row (1-3)");
                 row = scanner.nextInt();
                 scanner.nextLine();
-            if (row >= 1 && row <= 3){
-                select = true;
+                if (row >= 1 && row <= 3){
+                    select = true; // if input is valid, exit loop
+                }
+                else{
+                    System.out.println("You must enter a row between the numbers 1-3.");
+                }
             }
-            else{
-                System.out.println("You must enter a row between the numbers 1-3.");
-            }
-        }
             catch (InputMismatchException e){
                 System.out.println("This is not a valid number.");
                 scanner.nextLine();
             }
-        }//ends while
+        }
 
         select = false; // reset for columns
 
@@ -80,13 +108,13 @@ public class TicTacToe {
         try{
             col = scanner.nextInt();
             scanner.nextLine();
-            if (col >= 1 && col <= 3){
-                select = true;
+                if (col >= 1 && col <= 3){
+                    select = true;
+                }
+                else{
+                System.out.println("You must enter a column between the numbers 1-3.");
+                }
             }
-            else{
-            System.out.println("You must enter a column between the numbers 1-3.");
-            }
-        }
         catch (InputMismatchException e){
             System.out.println("This is not a valid number.");
             select = false;
@@ -98,16 +126,11 @@ public class TicTacToe {
     col = col - 1;
 
     boolean placeMove = gameBoard.makeMove(row, col, currentPlayer.getSymbol());
-    if (!placeMove){
+    if (!placeMove){ // if placeMove is not valid
         System.out.println("That spot is full, try again");
         promptPlayerMove();
+        }
     }
-
-    boolean validMove = false;
-        // TODO: ask the player to place a move
-        // Check whether the move is valid, if not, ask the player to place a move again
-        // If the player's move is valid, the move is placed on the gameBoard
-    }//ends while loop
 
     private void switchPlayers() {
         if (currentPlayer == player1)

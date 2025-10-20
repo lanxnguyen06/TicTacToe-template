@@ -20,5 +20,4 @@ public class Player {
     public char getSymbol(){
         return symbol;
     }
-    // TODO: implement.
 }
